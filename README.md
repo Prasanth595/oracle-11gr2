@@ -1,8 +1,8 @@
-# doomkin/oracle Dockerfile
+# Prasanth595/oracle Dockerfile
 
 Oracle Database 11gR2 with SSH key access on Oracle Linux 6.6 Dockerfile for trusted Docker builds.
 
-This [**Dockerfile**](https://github.com/doomkin/oracle/blob/master/Dockerfile) is a [trusted build](https://registry.hub.docker.com/u/doomkin/oracle/) of [Docker Registry](https://registry.hub.docker.com/).
+This [**Dockerfile**](https://github.com/Prasanth595/oracle/blob/master/Dockerfile) is a [trusted build](https://registry.hub.docker.com/u/Prasanth595/oracle/) of [Docker Registry](https://registry.hub.docker.com/).
 
 ### Base Docker Image
 
@@ -10,7 +10,7 @@ This [**Dockerfile**](https://github.com/doomkin/oracle/blob/master/Dockerfile) 
 
 ### Installation
 ```
-sudo docker pull doomkin/oracle
+sudo docker pull Prasanth595/oracle
 ```
 
 ### Run with external Database storage
@@ -21,7 +21,7 @@ sudo chgrp -R 501 /oradata                   # where 501 is number of dba group 
 sudo chcon -Rt svirt_sandbox_file_t /oradata # instruction for the SELinux
 sudo docker run --name orac -it -P \
     -v /oradata:/u02/oradata \
-    doomkin/oracle
+    Prasanth595/oracle
 ```
 
 ### Login into Container by SSH
@@ -65,7 +65,7 @@ dbca-delete <SID>
 ### Instructions for building image manually
 Download end extract this repo
 ```
-wget https://github.com/doomkin/oracle/archive/master.zip
+wget https://github.com/Prasanth595/oracle/archive/master.zip
 unzip master.zip
 cd oracle-master
 ```
@@ -87,35 +87,35 @@ oracle.install.db.config.starterdb.characterSet=CL8MSWIN1251
 
 Build image
 ```
-sudo docker build -t="doomkin/oracle" . 
+sudo docker build -t="Prasanth595/oracle" . 
 ```
 
 ### Build the image with only last layer to compress
 ```
 echo "Build the Docker image"
-sudo docker build -t="doomkin/oracle:source" .
+sudo docker build -t="Prasanth595/oracle:source" .
 
 echo "Create the Container with only last layer to compress"
-sudo docker run --name orac doomkin/oracle:source
+sudo docker run --name orac Prasanth595/oracle:source
 sudo docker stop orac
 
 echo "Export the Container to file"
 sudo docker export orac > oracle.tar
 
 echo "Import the Container from file to the raw Docker image (without metadata)"
-cat oracle.tar | sudo docker import - doomkin/oracle:raw
+cat oracle.tar | sudo docker import - Prasanth595/oracle:raw
 rm oracle.tar
 
 echo "Remove the Container"
 sudo docker rm orac
 
-echo "List images (doomkin/oracle:source can be deleted)"
+echo "List images (Prasanth595/oracle:source can be deleted)"
 sudo docker images
 ```
 
 ### To restore metadata rebuild image with following Dockerfile
 ```
-FROM doomkin/oracle:raw
+FROM Prasanth595/oracle:raw
 VOLUME /u02/oradata /u02/dump
 EXPOSE 22 1521
 CMD /etc/rc.local; bash
